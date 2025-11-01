@@ -27,6 +27,38 @@ Before starting, make sure you have installed:
 
 ---
 
+
+## ⚙️ MongoDB Installation and Setup
+
+### 1. Download MongoDB Community Server
+Go to the official MongoDB website:  
+https://www.mongodb.com/try/download/community  
+
+Choose your operating system (Windows, macOS, or Linux).  
+During installation, check the option **"Install MongoDB as a Service"** — this makes MongoDB run automatically in the background.
+
+---
+
+### 2. Install MongoDB Compass
+After installing MongoDB, download MongoDB Compass from:  
+https://www.mongodb.com/products/compass  
+
+MongoDB Compass allows you to visually see databases, collections, and documents.  
+After installation, open Compass and connect to the default local database address:  
+mongodb://127.0.0.1:27017
+
+---
+
+### 3. Verify MongoDB is Running
+If the service is installed, MongoDB will start automatically each time you turn on your computer.  
+To check, open a terminal and type:  
+mongod --version  
+If you see version information, MongoDB is correctly installed.  
+
+You can also verify by opening Compass — if it connects successfully, your MongoDB service is running.
+
+---
+
 ## ⚙️ Setup Tutorial (Step by Step)
 
 ### 1. Create or Clone the Project
@@ -130,18 +162,7 @@ After following this tutorial, you will be able to:
 
 ---
 
-## 🔒 Security Notice
 
-This project is intentionally open for learning purposes.  
-In a real-world environment, you should implement:  
-• Input validation with express-validator.  
-• Authentication using JWT tokens.  
-• Authorization and user roles.  
-• Rate limiting with express-rate-limit.  
-• Cross-Origin Resource Sharing (CORS) configuration.  
-• Proper error handling middleware.  
-
----
 
 ## 👨‍💻 Author
 
