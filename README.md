@@ -1,177 +1,144 @@
 # 🧩 REST API with Node.js and MongoDB
 
-This project is a simple REST API built using Node.js, Express, and MongoDB. It demonstrates how to perform CRUD operations (Create, Read, Update, Delete) using HTTP requests tested with Postman. It is part of an E-Portfolio presentation to demonstrate backend development.
+This project is a simple REST API built using **Node.js**, **Express**, and **MongoDB Atlas**. It demonstrates how to perform **CRUD operations** (Create, Read, Update, Delete) using HTTP requests tested with **Postman**. It was developed as part of an **E-Portfolio presentation** to demonstrate backend development in practice.
 
 ---
 
 ## 📦 Features
-
-• Express.js backend with controllers, models, and routes  
-• MongoDB integration (local or Atlas)  
-• CRUD functionality for user data  
-• Environment variables using .env  
-• Testing with Postman  
-• Step-by-step tutorial included  
-• Ideal for educational and demo purposes  
+- Express.js backend with controllers, models, and routes  
+- MongoDB Atlas cloud integration  
+- CRUD functionality for user data  
+- Environment variables using `.env`  
+- Testing with Postman  
+- Step-by-step setup tutorial included  
+- Ideal for educational and demo purposes  
 
 ---
 
 ## 🧰 Requirements
-
-Before starting, make sure you have installed:  
-• Node.js (version 18 or newer)  
-• MongoDB Community Server or MongoDB Atlas  
-• MongoDB Compass  
-• Postman  
-• A text editor such as Visual Studio Code  
+Before starting, make sure you have:  
+- [Node.js (version 18 or newer)](https://nodejs.org)  
+- [MongoDB Atlas account (free tier)](https://www.mongodb.com/atlas)  
+- [Postman (API testing tool)](https://www.postman.com/downloads/)  
+- A text editor such as **Visual Studio Code**  
 
 ---
 
+## ☁️ MongoDB Atlas Setup (Cloud Database)
+### 1️⃣ Create a Free Atlas Account  
+Go to [https://www.mongodb.com/atlas](https://www.mongodb.com/atlas) and create a free account. You can sign up using your Google account or with an email and password.
 
-## ⚙️ MongoDB Installation and Setup
+### 2️⃣ Create a New Cluster  
+After logging in:  
+- Click **“Build a Database”**  
+- Choose **Free Tier (M0)**  
+- Select a region near you  
+- Click **“Create Deployment”**  
+Atlas will take a few minutes to deploy your free cluster.
 
-### 1. Download MongoDB Community Server
-Go to the official MongoDB website:  
-https://www.mongodb.com/try/download/community  
+### 3️⃣ Add a Database User  
+Once your cluster is ready:  
+- Go to **Database Access** → click **“Add New Database User”**  
+- Choose a username (for example, `daniel`) and create a password  
+- Select **“Read and write to any database”**  
+- Click **“Add User”**  
+Keep your username and password handy — you’ll need them to connect.
 
-Choose your operating system (Windows, macOS, or Linux).  
-During installation, check the option **"Install MongoDB as a Service"** — this makes MongoDB run automatically in the background.
+### 4️⃣ Allow Network Access  
+Go to **Network Access** → click **“Add IP Address”**.  
+Choose **“Allow access from anywhere (0.0.0.0/0)”** → Confirm.  
+This will allow your application to connect to your Atlas cluster from your computer.
+
+### 5️⃣ Get the Connection String  
+Return to **Database → Connect → Drivers → Node.js**.  
+Copy the connection string — it should look similar to this:  
+`mongodb+srv://<username>:<password>@cluster0.xxxxxx.mongodb.net/`
+
+### 6️⃣ Create Your .env File  
+In the root of your project, create a file named `.env` and paste this:  
+`MONGO_URI=mongodb+srv://daniel:<password>@cluster0.xxxxxx.mongodb.net/restapi`  
+`PORT=5000`  
+Replace `<password>` with your actual password from step 3.  
+The database **restapi** will be automatically created when you add your first data.
 
 ---
 
-### 2. Install MongoDB Compass
-After installing MongoDB, download MongoDB Compass from:  
-https://www.mongodb.com/products/compass  
-
-MongoDB Compass allows you to visually see databases, collections, and documents.  
-After installation, open Compass and connect to the default local database address:  
-mongodb://127.0.0.1:27017
-
----
-
-### 3. Verify MongoDB is Running
-If the service is installed, MongoDB will start automatically each time you turn on your computer.  
-To check, open a terminal and type:  
-mongod --version  
-If you see version information, MongoDB is correctly installed.  
-
-You can also verify by opening Compass — if it connects successfully, your MongoDB service is running.
-
----
-
-## ⚙️ Setup Tutorial (Step by Step)
-
-### 1. Create or Clone the Project
+## ⚙️ Project Setup (Step-by-Step)
+### 1️⃣ Create or Clone the Project  
 If you already have a GitHub repository, clone it with:  
-git clone https://github.com/DanielMiuta24/rest-api.git  
-cd rest-api  
-Otherwise, create a new folder manually and open it in VS Code.  
+`git clone https://github.com/DanielMiuta24/rest-api.git`  
+`cd rest-api`  
+Otherwise, create a new folder manually and open it in **VS Code**.
 
----
+### 2️⃣ Initialize Node.js  
+Run this command to create a new Node.js project:  
+`npm init -y`
 
-### 2. Initialize Node.js
-Run the following command to create a package.json file:  
-npm init -y  
+### 3️⃣ Install Dependencies  
+Install the required packages by running:  
+`npm install express mongoose dotenv nodemon`  
+Here’s what each package does:  
+- **Express** – Framework for creating the backend server  
+- **Mongoose** – Connects Node.js to MongoDB Atlas  
+- **Dotenv** – Loads environment variables from a `.env` file  
+- **Nodemon** – Automatically restarts the server during development  
 
----
+### 4️⃣ Configure package.json  
+Open your `package.json` and update the **scripts** section:  
+`"scripts": { "dev": "nodemon server.js", "start": "node server.js" }`  
+Now you can use:  
+- `npm run dev` for development mode (auto-reload)  
+- `node server.js` for normal run  
 
-### 3. Install Dependencies
-Install the required packages:  
-npm install express mongoose dotenv nodemon  
+### 5️⃣ Project Structure  
+After setup, your project should contain the following files and folders:  
+- `server.js` → main entry file  
+- `routes/` → contains API route definitions  
+- `controllers/` → contains business logic  
+- `models/` → defines data structure for MongoDB  
+- `.env` → stores environment variables  
+- `package.json` → project configuration  
+- `README.md` → project documentation  
 
-Express is used for the backend framework.  
-Mongoose is used to interact with MongoDB.  
-Dotenv loads environment variables from a .env file.  
-Nodemon restarts the server automatically when files change.  
-
----
-
-### 4. Configure package.json
-Open the package.json file and add the following under the scripts section:  
-“dev”: “nodemon server.js”  
-“start”: “node server.js”  
-
-This allows you to start the app using either npm run dev for development (auto reload) or node server.js for normal runs.  
-
----
-
-### 5. Create the .env File
-At the root of your project, create a file named .env and add:  
-MONGO_URI=mongodb://127.0.0.1:27017/restapi  
-PORT=5000  
-
-If you use MongoDB Atlas, replace the URI with your Atlas connection string.  
-
----
-
-### 6. Project Structure
-After setup, your project should contain the following folders and files:  
-server.js  
-routes/  
-controllers/  
-models/  
-.env  
-package.json  
-README.md  
-
----
-
-### 7. Start the Server
-Start your backend with one of the following commands:  
-npm run dev  
+### 6️⃣ Start the Server  
+Start your backend server using one of the following commands:  
+`npm run dev`  
 or  
-node server.js  
+`node server.js`  
+If everything is set up correctly, you should see in your terminal:  
+✅ MongoDB connected  
+🚀 Server running on port 5000  
 
-If the setup is correct, the terminal will display:  
-MongoDB connected  
-Server running on port 5000  
-
----
-
-### 8. Test the API with Postman
-Once your server is running, open Postman and test the following endpoints:
-
-GET /api/users → Retrieve all users  
-GET /api/users/:id → Retrieve a user by ID  
-POST /api/users → Add a new user  
-PUT /api/users/:id → Update an existing user  
-DELETE /api/users/:id → Delete a user  
-
-Example workflow in Postman:  
-1. Create a user using POST with a JSON body containing name, email, and age.  
-2. Retrieve all users using GET to confirm creation.  
-3. Update a specific user by its ID using PUT.  
-4. Delete that user using DELETE.  
-5. Confirm changes visually in MongoDB Compass.  
+### 7️⃣ Test the API with Postman  
+Once your server is running, open **Postman** and test the API endpoints.  
+Available routes:  
+- **GET** `/api/users` → Retrieve all users  
+- **GET** `/api/users/:id` → Retrieve a specific user  
+- **POST** `/api/users` → Add a new user  
+- **PUT** `/api/users/:id` → Update an existing user  
+- **DELETE** `/api/users/:id` → Delete a user  
+**Example testing flow:**  
+1. Send a **POST** request to create a new user with fields like name, email, and age.  
+2. Use **GET** to retrieve all users and confirm the new one appears.  
+3. Send a **PUT** request to update user data.  
+4. Use **DELETE** to remove that user.  
+5. Open your MongoDB Atlas cluster → click **Browse Collections** → confirm your changes are reflected.  
 
 ---
 
-### 9. Verify Data in MongoDB Compass
-Open MongoDB Compass, connect to mongodb://127.0.0.1:27017, open the database restapi, and view the collection users. You should see the data you created or modified from Postman.  
+## 📚 Learning Outcomes  
+After completing this tutorial, you will:  
+- Understand REST API architecture and HTTP methods  
+- Learn how to connect Node.js with MongoDB Atlas  
+- Organize your project using routes, controllers, and models  
+- Use Postman to send and test API requests  
+- Manage and view your data directly in MongoDB Atlas  
 
 ---
 
-## 📚 Learning Outcomes
-
-After following this tutorial, you will be able to:  
-• Understand how REST APIs work.  
-• Connect a Node.js app with MongoDB.  
-• Handle requests using Express routes and controllers.  
-• Use Postman to send and test API requests.  
-• Manage persistent data with MongoDB Compass.  
-
----
+## 👨‍💻 Author  
+**Daniel Miuta**
 
 
 
-## 👨‍💻 Author
 
-**Daniel Miuta**  
-
-
----
-
-## 📝 License
-
-This project is created for educational purposes.  
-You are free to reuse, share, or modify it for your own learning or portfolio.
